@@ -129,7 +129,6 @@ ggplot(data = lhprism_data, aes(x = pu_count)) +
   scale_x_log10()
 ```
 
-
 Let's create a new variable that is the log10 of the pull-up count
 
 ```{r}
@@ -163,7 +162,6 @@ median(lhprism_data$pu_count, na.rm = TRUE)
 
 ```
 
-
 Is this different than what a group a volunteers may be able to pull-up in a day?
 
 ```{r}
@@ -181,9 +179,6 @@ What is the probability of observing our mean or something more extreme?
 ```{r}
 2 * pnorm(q = abs((volunteer_pu_count - log_pu_count_mean) / log_pu_count_sd), lower.tail = FALSE)
 ```
-
-
-
 
 ### Relationship between gross square feet searched vs treated
 

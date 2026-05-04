@@ -48,27 +48,135 @@ Project overview. Written by all participants.
 
 ## Overview of the LHPRISM data set
 
--   Description of the data set and its contents
-    -   An environmental monitoring dataset from the Lower Hudson Partnership for Regional Invasive Species Management focused on invasive species treatment in the Hudson Valley.
+**DRAFT SECTION:**
 
-    -   What each record represents: A plot or site where invasive species were identified, treated, and monitored over time (3-year follow-up).
+The dataset is an environmental monitoring record compiled by the Lower Hudson Partnership for Regional Invasive Species Management (LHPRISM). This organization operates within the broader NY-NJ region. Records span from 1992 to 2022, meaning we do not have a static snapshot of the region, but instead an archive of ongoing invasive management. This dataset is concerned with invasive plant species and the coordinated effort to control and eliminate such species from targeted sites across the northeast. Both the collection period and geographical range are broad, with records drawn from over a dozen counties. Sites range from parks, wildlife sanctuaries, golf courses and nature perseveres. Such a swath reflects the extent of ecological damage by invasive species. The dataset comprises just under 1,050 distinct sites that are each assigned a unique code and linked to their contact information. The ecolocal content is split into two units: populations and visits. The Populations tab documents 2127 individual invasive species infestations that are assigned a specific property code and plant species code, georeferenced with latitude and longitude coordinates and assigned a current treatment status. These statuses range from "Untreated" to "Eradicated", with intermediate stages including "Partially Treated," "Completely Treated," "No Plants 1 Year," and "No Plants 2 Years." This graduated classification system is central to the dataset's design, as it is precisely this progression (or lack thereof) that the dataset was built to track.
 
-    -   Key variables: Location info ( site, participant) species present (abundance/cover) treatment type (chemical/method used) treatment timing (initial + follow-ups) monitoring outcomes (change in invasive presence over time) Missing/NULL values (HUGE PROBLEM WHAT TO SAY ABOUT MISSING DATA ITS EVERYWHERE)
--   Description of data collection methods (will require communication with LHPRISM staff)
-    -   Field surveys conducted at designated plots, identification of invasive species and estimation of their abundance, application of treatment, follow up monitoring intervals (yearly for 3 years)
+```{r}
+library(knitr)
 
-    -   NEED to zoom with Brent (whether plots are randomly selected or targeted, this matters a lot, whether measurement methods are standardized)
+LHPRISM_Data <- read.csv("LHPRISM-Data.csv")
+metadata <- read.csv("metadata.csv")
 
-    -   More questions: what defines a “plot”, [**what do NULL values represent**]{.underline} ,monitoring consistency? known biases (sites chosen because they were heavily bad)
--   Summary statistics and figures about major components of the data set (e.g., number of records, number of species, etc.)
-    -   Total number of rows, number of unique plots, number of invasive species tracked number of treatment types, time span
+metadata$PercentMissing <- round(
+  colMeans(is.na(LHPRISM_Data))[ metadata$Variable_name ] * 100,
+  2
+)
 
-    -   Figures? Histogram of number of species, count of treatments applied
+names(metadata) <- c(
+  "Variable Name",
+  "Description",
+  "Units",
+  "Percent Missing Data"
+)
 
-    -   [**Missing data visualizatio**n]{.underline}
--   Should we put analyses of correlations and relationships among the variables in this section?
-    -   No, this is what data do we have not what does it tell us or what can we glean, **MISSSING DATA**
--   In regards to reaching out, Mimi and I emailed Brent some of these initial question listed here and asked to meet on zoom about more specific ones.
+kable(metadata, caption = "LHPRISM Metadata Table")
+```
+
+The species catalog is incredibly diverse, containing over 1000 unique species across the region; Some of the more predominant invasives being multiflora rose, Japanese knotweed and the mile-a-minute vine. The Visit sheets contain nearly 3830 records representing the field backbone of the data set. Each visit log captures the site surveyed, the data of the survey, the person performing the survey and what conditions the site is in. Variables record plant count, percent cover, phenological stage, the size of the area treated, the herbicide application specifics (i.e. the product name, concentration, method used). This operational data is where the utility for evaluation arises from as it also tracks data on each site over time. This data set is a collaboration between at least 18 distinct organizations. This collaboration is a key feature of the data set and introduces meaningful variation in the data taken, as it may add weight to what fields were prioritized and the consistency of the terminology used. An example of this is the appearance of both “2-Completely Treated” and “Completely Treated 2” each as a distinct entry. Prior to data analysis, our team completed a data cleaning procedure on OpenRefine to ensure consistency across entry variations.
+
+The purpose of the data set is to evaluate the effectiveness of these treatment interventions over time to record and assess the effectiveness of each treatment on each species, and subsequently develop evidence based estimates of how long it takes to eradicate each invasive species. By tracking multiple sites over multiple years, the data set highlights important information: which species respond to intervention? Which species persist despite treatment? Under what conditions are populations most effectively eradicated? Beyond individual population outcomes, the data set is intended to surface broader patterns, trends in species spread, shifts in treatment methods, and regional variation in management success that can inform future resource allocation and strategic planning for invasive species control across the lower Hudson Valley.
+
+**NOTES:**
+
+-   More info on each line so initial assessment + 3 years of follow ups (I need to check if this is even how it is consistently 
+
+-   Missing data needs more context the “missingness” is systemic and gives us problems like does the missingness hide something, is this data skewed for example
+
+-   Brent questions? Like does null mean nothing or just abandoned, too many superfluous variables?
+
+-   I didn't write anything about how each data point is obtained we talked about how percent cover is estimated for example another one for our guy Brent 
+
+-   Maybe we can say something about how because of the collaborative nature of the dataset collection was not uniform I don’t know if that is assuming too much
+
+**METADATA TABLE COLUMNS:**
+
+Need to confirm variable definitions with LHPRISM before creating
+
+-   Variable name
+
+-   Plain-language definition
+
+-   Unit or category type
+
+-   **Missing data summary, % missing is the right approach**
+
+**FIGURES AND TABLES**
+
+-   Most prominent species
+
+    lhprism_data %\>%
+
+  group_by(species_code) %\>%
+
+  count() %\>%
+
+  arrange(desc(n))
+
+-   Count of treatment types
+
+-   Time range of data (earliest to latest date) (histogram, already in exploratory analysis doc)
+
+    ggplot(data = lhprism_data, aes(x = visit_date)) +
+
+    geom_histogram()
+
+-   Count of follow-up visits per plot?
+
+    ```{r}
+    # Figure: Follow up visits per plot
+    plot_visits <- lhprism_data %>%
+      group_by(site) %>%
+      summarise(visit_count = n())
+
+    ggplot(plot_visits, aes(x = site, y = visit_count)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Follow-up Visits per Plot", x = "Site", y = "Number of Visits") +
+      theme(axis.text.x = element_blank())
+
+    ```
+
+    From this figure it is clear that frequency of visits across sites was highly uneven, a small number of sites represent a disproportionate share of the total visits. This skew is worth noting as we look towards the treatment outcomes as heavily visited sites may show stronger results due to the volume of intervention.
+
+    ```{r}
+    # Figure: Count of treatment types
+    treatment_counts <- data.frame(
+      Treatment = c("PU", "FO", "CO", "CS", "BB", "HS"),
+      Count = c(
+        sum(!is.na(lhprism_data$pu_count)),
+        sum(!is.na(lhprism_data$fo_count)),
+        sum(!is.na(lhprism_data$co_count)),
+        sum(!is.na(lhprism_data$cs_count)),
+        sum(!is.na(lhprism_data$bb_count)),
+        sum(!is.na(lhprism_data$hs_count))
+      )
+    )
+
+    p2 <- ggplot(treatment_counts, aes(x = Treatment, y = Count)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Count of Treatment Types", x = "Treatment", y = "Count")
+    print(p2)
+    ```
+
+    Pull by hand (PU) is by far the most common treatment method across the data set, Cut stomp (CS) and basal bark (BB) applications were also frequent. Hack and squirt was rarely recorded. This distribution likely reflects both species composition and piratical constraints in the field, hand pulling is easier and cheaper than chemical application. The lack of herbicide use may also reflect the sites themselves, chemical application at some preserves may be more tightly regulated.
+
+    ```{r}
+    # Figure: Visits by species, descending order
+    species_visits <- lhprism_data %>%
+      group_by(species_code) %>%
+      summarise(visit_count = n()) %>%
+      arrange(desc(visit_count))
+
+    p3 <- ggplot(species_visits, aes(x = reorder(species_code, -visit_count), y = visit_count)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Visits by Species", x = "Species", y = "Number of Visits") +
+      theme(axis.text.x = element_blank())
+    print(p3)
+    ```
+
+The distribution of visits by species is strongly right skewed with a few key species accounting for the majority of the recorded visits. This pattern is however consistent about what we know of the region a few key species which are aggressive in growth dominate the landscape and demand repeated intervention. The long tail may reflect limited spread or perhaps successful management as we know some sites were far more common then others in total visit numbers.
+
+-   **———————————————————————————————————————**
 
 ## Spatial distribution of the data
 
