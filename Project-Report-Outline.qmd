@@ -86,53 +86,18 @@ The New York State Department of Environmental Conservation (DEC) works with man
 
 PRISMs are groups of partners who work together to manage invasive species in different regions of New York [@nysdec2016]. They include people from federal and state agencies, environmental groups, scientists, industry, outdoor recreation, and local community members [@nysdec2024]. The DEC supports each PRISM through the Environmental Protection Fund, giving money to the organizations that host and coordinate them [@nysdec2024; @nysdec2016].
 
-### PRISMs carry out many important tasks, including:
+## PRISMs carry out many important tasks, including:
 
-Planning invasive species management for their region [@nysdec2016]
+Since 2013, the DEC has contracted organizations to run all eight PRISMs across the state, which plan and coordinate regional invasive species management while bringing partners together statewide [@NYSDEC2016]. They survey and map invasions, detecting new threats early and responding quickly before species spread [@NYSDEC2016]. Control and removal projects are carried out alongside habitat restoration and monitoring after treatment [@NYSDEC2024]. Communities are engaged through education, outreach, volunteer training, and citizen science support through the Invasive Species Research Institute, with sightings logged to iMapInvasives [@NYSDEC2024].
 
-Running programs that help prevent new invasive species [@nysdec2016]
+## PRISMs deliver:
 
-Surveying and mapping where invasive species are found [@nysdec2024]
-
-Finding new invasions early and responding quickly [@nysdec2016]
-
-Carrying out control and removal projects [@nysdec2016]
-
-Restoring and monitoring habitats after treatment [@nysdec2024]
-
-Teaching people about invasive species and their impacts [@nysdec2024]
-
-Bringing partners together to coordinate work [@nysdec2016]
-
-Recruiting and training volunteers [@nysdec2024]
-
-Supporting research through citizen science with the Invasive Species Research Institute [@nysdec2024]
-
-Reporting invasive species sightings to iMapInvasives [@nysdec2024]
-
-Providing education and outreach to communities [@nysdec2016]
-
-Since 2013, the DEC has contracted organizations to run all eight PRISMs across the state [@nysdec2016].
-
-### PRISMs deliver:
-
-Regional planning for invasive species management [@nysdec2016]
-
-Early detection and rapid response [@nysdec2016]
-
-Eradication and control projects [@nysdec2024]
-
-Education and outreach (with DEC-supported educators) [@nysdec2024]
-
-Coordination among partners [@nysdec2016]
-
-Volunteer training and involvement [@nysdec2024]
-
-Citizen-science support for research [@nysdec2024]
+PRISMs provide comprehensive regional planning for invasive species management, ensuring coordinated strategies are in place across all eight regions of New York State [@NYSDEC2016]. They lead early detection and rapid response efforts, minimizing the establishment and spread of new invasions [@NYSDEC2016]. Eradication and control projects are executed on the ground, followed by long-term habitat restoration and monitoring to track recovery [@NYSDEC2024]. With DEC-supported educators, PRISMs deliver targeted education and outreach to communities, raising awareness and building local capacity [@NYSDEC2024]
 
 The DEC is the main state agency responsible for environmental protection in New York, and invasive species management is part of its work [@nysdec2024]. Because invasive species spread across boundaries, New York created PRISMs so each region can coordinate its efforts [@nysdec2024].
 
 The Lower Hudson PRISM (LHPRISM) covers the Lower Hudson Valley [@nysdec2024]. It uses trained staff and community volunteers who go into the field, record invasive species, help with treatment projects, and upload data to a shared statewide database [@nysdec2024]. This data is used for many environmental projects in the region [@finley2023].
+
 
 ### Information and Background on the NYS Invasive Species Lists
 
